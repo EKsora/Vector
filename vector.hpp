@@ -258,14 +258,14 @@ public:
      */
     T & at(const size_t &pos) {
         if(pos>size()){
-            //std::cout<<"index_out_of_bound"<<std::endl;
+            std::cout<<"index_out_of_bound"<<std::endl;
             return NULL;
         }
         return _start+pos;
     }
     const T & at(const size_t &pos) const {
         f(pos>size()){
-            //std::cout<<"index_out_of_bound"<<std::endl;
+            std::cout<<"index_out_of_bound"<<std::endl;
             return NULL;
         }
         return _start+pos;
@@ -377,7 +377,7 @@ public:
      */
     iterator insert(const size_t &ind, const T &value) {
         if(ind>size()){
-            //std::cout<<"index_out_of_bound"<<std::endl;
+            std::cout<<"index_out_of_bound"<<std::endl;
             return NULL;
         }
         if (_finish == _endofstorage) {
@@ -414,7 +414,7 @@ public:
      */
     iterator erase(const size_t &ind) {
         if(ind>=size()){
-            //std::cout<<"index_out_of_bound"<<std::endl;
+            std::cout<<"index_out_of_bound"<<std::endl;
             return NULL;
         }
         auto it = ind;
@@ -442,7 +442,7 @@ public:
     void pop_back() {
         _finish--;
         if((_finish-1)<=_start)
-            //std::cout<<"container_is_empty"<<std::endl;
+            std::cout<<"container_is_empty"<<std::endl;
     }
     private:
         T* _start,_finish,_endofstorage;
