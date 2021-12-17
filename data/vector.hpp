@@ -113,19 +113,19 @@ public:
          * a operator to check whether two iterators are same (pointing to the same memory address).
          */
         bool operator==(const iterator &rhs) const {
-            return this->p==rhs.p&&this->pos==rhs.pos;
+            return t==rhs.t&&pos==rhs.pos;
             }
         bool operator==(const const_iterator &rhs) const {
-            return this->p==rhs.p&&this->pos==rhs.pos;
+            return t==rhs.t&&pos==rhs.pos;
             }
         /**
          * some other operator for iterator.
          */
         bool operator!=(const iterator &rhs) const {
-            return this->t!=rhs.t||this->pos!=rhs.pos;
+            return t!=rhs.t||pos!=rhs.pos;
             }
         bool operator!=(const const_iterator &rhs) const {
-            return this->t!=rhs.t||this->pos!=rhs.pos;
+            return t!=rhs.t||pos!=rhs.pos;
             }
     };
     /**
@@ -219,19 +219,19 @@ public:
          * a operator to check whether two iterators are same (pointing to the same memory address).
          */
         bool operator==(const iterator &rhs) const {
-            return this->p==rhs.p&&this->pos==rhs.pos;
+            return t==rhs.t&&pos==rhs.pos;
             }
         bool operator==(const const_iterator &rhs) const {
-            return this->p==rhs.p&&this->pos==rhs.pos;
+            return t==rhs.t&&pos==rhs.pos;
             }
         /**
          * some other operator for iterator.
          */
         bool operator!=(const iterator &rhs) const {
-            return this->t!=rhs.t||this->pos!=rhs.pos;
+            return t!=rhs.t||pos!=rhs.pos;
             }
         bool operator!=(const const_iterator &rhs) const {
-            return this->t!=rhs.t||this->pos!=rhs.pos;
+            return t!=rhs.t||pos!=rhs.pos;
             }
     };
     /**
@@ -376,11 +376,12 @@ public:
         if(vsize+1>=capacity) 
             ds();
         size_t i;
-        for(i=vsize;i>=0;i--)
-            if(array[i]==*pos) 
+        for(i=vsize;i>=0;i--){
+            iterator iter(array,i);
+            if(pos==iter) 
                 break;
-            else
-                array[i]=array[i-1];
+            array[i]=array[i-1];
+        }
         array[i]=value,vsize++;
         iterator iter(array,i);
         return iter;
@@ -409,12 +410,14 @@ public:
      */
     iterator erase(iterator pos) {
         size_t k=--vsize;
-        while(array[k]!=*pos) 
-            k--;
+        for(k=vsize;k>=0;k--){
+            iterator iter(array,k);
+            if(iter==pos) break;
+        }
         for(size_t i=k;i<vsize;i++) 
             array[i]=array[i+1];
         array[vsize].~T();
-        if(k==vsize-1) 
+        if(k==vsize) 
             return end();
         iterator iter(array,k);
         return iter;
@@ -425,7 +428,7 @@ public:
      * throw index_out_of_bound if ind >= size
      */
     iterator erase(const size_t &ind) {
-        if(ind>vsize) 
+        if(ind>=vsize) 
             throw index_out_of_bound();
         for(size_t i=ind;i<vsize-1;i++) 
             array[i]=array[i+1];
