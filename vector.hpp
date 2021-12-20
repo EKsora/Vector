@@ -369,7 +369,7 @@ public:
         for(size_t i=0;i<vsize;i++){
             //array[i]=tmp[i];
             new(&array[i]) T(tmp[i]);
-            //tmp[i].~T();
+            tmp[i].~T();
         }
         free(tmp);
     }
