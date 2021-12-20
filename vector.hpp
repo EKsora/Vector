@@ -377,7 +377,7 @@ public:
         if(vsize+1>=capacity) 
             ds();
         size_t i;
-        for(i=vsize;i>=0;i--){
+        for(i=vsize;i>0;i--){
             iterator iter(array,i);
             if(pos==iter) 
                 break;
